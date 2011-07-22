@@ -12,9 +12,9 @@ setup(
     license="GPL",
     description="Little helper application to improve django choices (for fields)",
     long_description=readme,
-    url="https://github.com/twidi/django-extended-choices",
-    author="Stephane Angel",
-    author_email="s.angel@twidi.com",
+    url="https://github.com/liberation/django-extended-choices",
+    author="Djaz Team",
+    author_email="devweb@liberation.fr",
     packages=find_packages(),
     include_package_data=True,
     classifiers=[
