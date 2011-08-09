@@ -94,21 +94,13 @@ class Choices:
         if hasattr(self, name):
             raise ValueError(u"Cannot use %s as a subset name."
                               "It's already an attribute." % name)
-        SUBSET = []
-        SUBSET_DICT = {}  # retrocompatibility
-        REVERTED_SUBSET_DICT = {}  # retrocompatibility
-        for const in constants:
-            value = getattr(self, const)
-            string = self.CHOICES_DICT[value]
-            SUBSET.append((value, string))
-            SUBSET_DICT[value] = string  # retrocompatibility
-            REVERTED_SUBSET_DICT[string] = value  # retrocompatibility
-#        setattr(self, name, tuple(SUBSET))
-        setattr(self, name, Choices(parent=self, CONSTS=constants))
+        
+        subset = Choices(parent=self, CONSTS=constants)
+        setattr(self, name, subset)
         
         # For retrocompatibility
-        setattr(self, '%s_DICT' % name, SUBSET_DICT)
-        setattr(self, 'REVERTED_%s_DICT' % name, REVERTED_SUBSET_DICT)
+        setattr(self, '%s_DICT' % name, getattr(subset, "CHOICES_DICT"))
+        setattr(self, 'REVERTED_%s_DICT' % name, getattr(subset, "REVERTED_CHOICES_DICT"))
     
     @property
     def RAW_CHOICES(self):
