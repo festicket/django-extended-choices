@@ -43,6 +43,7 @@ class Choices:
         self._REVERTED_CHOICES_DICT = None
         self._RAW_CHOICES = None
         self._CONSTS = []
+        self._CONST_CHOICES = None
         self.parent = None
         if "parent" in kwargs:  # 'subchoice' mode
             self.parent = kwargs["parent"]
@@ -114,6 +115,9 @@ class Choices:
     
     @property
     def CHOICES(self):
+        """
+        Tuple of tuples (value, display_value).
+        """
         if self._CHOICES is None:
             self._CHOICES = tuple((k,v) for c,k,v in self.RAW_CHOICES if c in self._CONSTS)
         return self._CHOICES
@@ -135,6 +139,16 @@ class Choices:
                 if c in self._CONSTS:
                     self._REVERTED_CHOICES_DICT[v] = k
         return self._REVERTED_CHOICES_DICT
+    
+    @property
+    def CONST_CHOICES(self):
+        """
+        Tuple of tuples (constant, display_value).
+        """
+        if self._CONST_CHOICES is None:
+            self._CONST_CHOICES = tuple((c,v) for c,k,v in self.RAW_CHOICES \
+                                                           if c in self._CONSTS)
+        return self._CONST_CHOICES
     
     def __contains__(self, item):
         """

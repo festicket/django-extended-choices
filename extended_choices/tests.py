@@ -57,6 +57,13 @@ class ChoicesTests(TestCase):
     def test_unique_constants(self):
         self.assertRaises(ValueError, Choices, ('TWO', 2, u'Deux'), ('TWO', 4, u'Quatre'))
     
+    def test_simple_choice(self):
+        self.assertEqual(MY_CHOICES.CONST_CHOICES, 
+                         (("ONE", u"One for the money"),
+                          ("TWO", u"Two for the show"),
+                          ("THREE", u"Three to get ready"),)
+        )
+    
     def test_retrocompatibility(self):
         MY_CHOICES = Choices(
            ('TWO', 2, u'Deux'),
