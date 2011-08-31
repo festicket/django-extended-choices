@@ -125,6 +125,11 @@ class Choices:
         setattr(self, '%s_CONST_DICT' % name, SUBSET_CONST_DICT)
         setattr(self, 'REVERTED_%s_CONST_DICT' % name, REVERTED_SUBSET_CONST_DICT)
 
+    def __repr__(self):
+        return str(self.CHOICES_CONST_DICT.keys())
+
+
 if __name__ == '__main__':
     import doctest
     doctest.testmod()
+
