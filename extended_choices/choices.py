@@ -41,6 +41,7 @@ class Choices:
         self._CHOICES = None
         self._CHOICES_DICT = None
         self._REVERTED_CHOICES_DICT = None
+        self._VALUE_TO_CONST = None
         self._RAW_CHOICES = None
         self._CONSTS = []
         self._CONST_CHOICES = None
@@ -133,12 +134,28 @@ class Choices:
     
     @property
     def REVERTED_CHOICES_DICT(self):
+        """
+        Dict {"display_value": "value"}
+        """
+        # FIXME: rename in a more friendly name, like STRING_TO_VALUE?
         if self._REVERTED_CHOICES_DICT is None:
             self._REVERTED_CHOICES_DICT = {}
             for c, k, v in self.RAW_CHOICES:
                 if c in self._CONSTS:
                     self._REVERTED_CHOICES_DICT[v] = k
         return self._REVERTED_CHOICES_DICT
+    
+    @property
+    def VALUE_TO_CONST(self):
+        """
+        Dict {"value": "const"}
+        """
+        if self._VALUE_TO_CONST is None:
+            self._VALUE_TO_CONST = {}
+            for c, k, v in self.RAW_CHOICES:
+                if c in self._CONSTS:
+                    self._VALUE_TO_CONST[k] = c
+        return self._VALUE_TO_CONST
     
     @property
     def CONST_CHOICES(self):

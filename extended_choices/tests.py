@@ -64,6 +64,10 @@ class ChoicesTests(TestCase):
                           ("THREE", u"Three to get ready"),)
         )
     
+    def test_value_to_const(self):
+        self.assertEqual(MY_CHOICES.VALUE_TO_CONST, 
+                                                 {1: "ONE", 2:"TWO", 3:"THREE"})
+    
     def test_retrocompatibility(self):
         MY_CHOICES = Choices(
            ('TWO', 2, u'Deux'),
