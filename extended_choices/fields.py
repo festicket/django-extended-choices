@@ -40,12 +40,22 @@ class NamedExtendedChoiceFormField(forms.Field):
 class ExtendedChoiceField(forms.ChoiceField):
 
     def __init__(self, extended_choices=None, *args, **kwargs):
-        if not isinstance(extended_choices, Choices):
-            raise TypeError('extended_choices argument to %s is not a Choices instance' % (self, ))
-        kwargs['choices'] = extended_choices.CHOICES
         super(ExtendedChoiceField, self).__init__(*args, **kwargs)
+        if not extended_choices:
+            extended_choices = Choices()
         self.extended_choices = extended_choices
         self.value_for_display = None
+
+    def _get_extended_choices(self):
+        return self._extended_choices
+
+    def _set_extended_choices(self, value):
+        if not isinstance(value, Choices):
+            raise TypeError('extended_choices argument to %s is not a Choices instance' % (self, ))
+        self._extended_choices = value
+        self.choices = value.CHOICES
+
+    extended_choices = property(_get_extended_choices, _set_extended_choices)
 
     def get_value_display(self):
         """
