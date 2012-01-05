@@ -45,6 +45,22 @@ class ExtendedChoiceField(forms.ChoiceField):
         kwargs['choices'] = extended_choices.CHOICES
         super(ExtendedChoiceField, self).__init__(*args, **kwargs)
         self.extended_choices = extended_choices
+        self.value_for_display = None
+
+    def get_value_display(self):
+        """
+        Display human-readable value corresponding to the value that was
+        clean()ed last.
+
+        Returns None if the value doesn't match any choice or if the field has
+        not been cleaned yet
+        """
+        return self.value_for_display
+
+    def clean(self, value):
+        rval = super(ExtendedChoiceField, self).clean(value)
+        self.value_for_display = self.extended_choices.CHOICES_DICT.get(rval, None)
+        return rval
 
 
 class ExtendedTypedChoiceField(ExtendedChoiceField, forms.TypedChoiceField):
