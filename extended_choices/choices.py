@@ -195,8 +195,8 @@ class Choices:
             raise ValueError("This operand could only by evaluated "
                              "with Choices or tuple instances. "
                              "Got %s instead." % type(item))
-        return item + self.CHOICES  # Order is important here
-                                    # to make it work with tuple AND Choices inst
+        return self.CHOICES + tuple(item)  # Make sure its a tuple, not a Choices
+                                           # instance
     
     def __repr__(self):
         return self.CHOICES.__repr__()

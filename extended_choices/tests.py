@@ -67,7 +67,28 @@ class ChoicesTests(TestCase):
     def test_value_to_const(self):
         self.assertEqual(MY_CHOICES.VALUE_TO_CONST, 
                                                  {1: "ONE", 2:"TWO", 3:"THREE"})
-    
+
+    def test_add_should_add_in_correct_order(self):
+        SOME_CHOICES = Choices(
+           ('ONE', 1, u'One'),
+           ('TWO', 2, u'Two'),
+        )
+        OTHER_CHOICES = Choices(
+           ('THREE', 3, u'Three'),
+           ('FOUR', 4, u'Four'),
+        )
+        # Adding a choices to choices
+        tup = SOME_CHOICES + OTHER_CHOICES
+        self.assertEqual(tup, ((1, 'One'), (2, 'Two'), (3, 'Three'), (4, 'Four')))
+
+        # Adding a tuple to choices
+        tup = SOME_CHOICES + ((3, 'Three'), (4, 'Four'))
+        self.assertEqual(tup, ((1, 'One'), (2, 'Two'), (3, 'Three'), (4, 'Four')))
+
+        # Adding a choices to tuple => do not work; is it possible to emulate it?
+#        tup = ((1, 'One'), (2, 'Two')) + OTHER_CHOICES
+#        self.assertEqual(tup, ((1, 'One'), (2, 'Two'), (3, 'Three'), (4, 'Four')))
+
     def test_retrocompatibility(self):
         MY_CHOICES = Choices(
            ('TWO', 2, u'Deux'),
